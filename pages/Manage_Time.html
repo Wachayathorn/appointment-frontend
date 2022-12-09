@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="/assets/images/immanage.png" />
+    <link rel="stylesheet" href="/import/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/import/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style_project.css">
+    <link rel="stylesheet" type="text/css" href="/import/sweetalert2/dist/sweetalert2.min.css">
+    <script src="/import/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascript//Manage_Time.js"></script>
+    <script>
+        $(function () {
+            $("#layout").load("/layouts/Manage_Layout.html");
+        });
+    </script>
+    <title>Appointment</title>
+
+    <style>
+        .freetime {
+            background-color: #f1f2f3;
+        }
+
+        .nofreetime {
+            background-color: rgb(255, 62, 62);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="layout"></div>
+    <div class="content">
+        <div class="row mt-3 mb-3">
+            <div class="col-6">
+                <p class="h2" style="margin: 0;" aria-hidden="true"><i class="fa fa-fw fa-calendar"></i> จัดการเวลาว่าง
+                </p>
+            </div>
+            <div class="col-6">
+                <p class="text-right" style="margin-bottom: 0px; margin-top: 8px;">ผู้ใช้งาน : <span
+                        id="user_login"></span></p>
+            </div>
+            <hr width="100%">
+        </div>
+        <div class="row mb-1">
+            <div class="col-12 text-center">
+                <p class="h5">ตารางเวลา วัน : <span id="sp_currentweek"></span></p>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="table_time" class="table table-bordered table-responsive-md btn-table">
+                <thead class="table bg-success">
+                    <tr>
+                        <th scope="col" style="text-align: center">วัน/เวลา</th>
+                        <th scope="col" style="text-align: center">09.00 - 10.00</th>
+                        <th scope="col" style="text-align: center">10.00 - 11.00</th>
+                        <th scope="col" style="text-align: center">11.00 - 12.00</th>
+                        <th scope="col" style="text-align: center">12.00 - 13.00</th>
+                        <th scope="col" style="text-align: center">13.00 - 14.00</th>
+                        <th scope="col" style="text-align: center">14.00 - 15.00</th>
+                        <th scope="col" style="text-align: center">15.00 - 16.00</th>
+                        <th scope="col" style="text-align: center">16.00 - 17.00</th>
+                        <th scope="col" style="text-align: center">17.00 - 18.00</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data="1st row">
+                        <th scope="row" style="text-align: center" class="bg-success">จันทร์</th>
+                        <td id="montime9"></td>
+                        <td id="montime10"></td>
+                        <td id="montime11"></td>
+                        <td id="montime12"></td>
+                        <td id="montime13"></td>
+                        <td id="montime14"></td>
+                        <td id="montime15"></td>
+                        <td id="montime16"></td>
+                        <td id="montime17"></td>
+                    </tr>
+                    <tr data="2nd row">
+                        <th scope="row" style="text-align: center" class="bg-success">อังคาร</th>
+                        <td id="tuetime9"></td>
+                        <td id="tuetime10"></td>
+                        <td id="tuetime11"></td>
+                        <td id="tuetime12"></td>
+                        <td id="tuetime13"></td>
+                        <td id="tuetime14"></td>
+                        <td id="tuetime15"></td>
+                        <td id="tuetime16"></td>
+                        <td id="tuetime17"></td>
+                    </tr>
+                    <tr data="3rd row">
+                        <th scope="row" style="text-align: center" class="bg-success">พุธ</th>
+                        <td id="wedtime9"></td>
+                        <td id="wedtime10"></td>
+                        <td id="wedtime11"></td>
+                        <td id="wedtime12"></td>
+                        <td id="wedtime13"></td>
+                        <td id="wedtime14"></td>
+                        <td id="wedtime15"></td>
+                        <td id="wedtime16"></td>
+                        <td id="wedtime17"></td>
+                    </tr>
+                    <tr data="4th row">
+                        <th scope="row" style="text-align: center" class="bg-success">พฤหัสบดี</th>
+                        <td id="thutime9"></td>
+                        <td id="thutime10"></td>
+                        <td id="thutime11"></td>
+                        <td id="thutime12"></td>
+                        <td id="thutime13"></td>
+                        <td id="thutime14"></td>
+                        <td id="thutime15"></td>
+                        <td id="thutime16"></td>
+                        <td id="thutime17"></td>
+                    </tr>
+                    <tr data="5th row">
+                        <th scope="row" style="text-align: center" class="bg-success">ศุกร์</th>
+                        <td id="fritime9"></td>
+                        <td id="fritime10"></td>
+                        <td id="fritime11"></td>
+                        <td id="fritime12"></td>
+                        <td id="fritime13"></td>
+                        <td id="fritime14"></td>
+                        <td id="fritime15"></td>
+                        <td id="fritime16"></td>
+                        <td id="fritime17"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row mt-1">
+            <diV class="col-6">
+                <div class="row justify-content-end">
+                    <label class="nofreetime"
+                        style="border-radius: 5px; width: 50px; height: 50px; margin: 5px;"></label>
+                    <div class="text-left" style="padding: 20px;">
+                        <label style="font-size: 18px; font-weight: bold; margin-bottom: 0px;">: <span
+                                style="color: rgb(255, 62, 62);">สีแดง</span> แสดงช่วงเวลาที่ไม่ว่าง</label>
+                    </div>
+                </div>
+            </diV>
+            <diV class="col-6">
+                <div class="row justify-content-lg-start">
+                    <label class="freetime" style="border-radius: 5px; width: 50px; height: 50px; margin: 5px;"></label>
+                    <div class="text-left" style="padding: 20px;">
+                        <label style="font-size: 18px; font-weight: bold; margin-bottom: 0px;">: <span
+                                style="color: #c3c3c3;">สีเทา</span> แสดงช่วงเวลาที่ว่าง</label>
+                    </div>
+                </div>
+            </diV>
+        </div>
+    </div>
+    <div id="loading_scn" style="display:none;">
+        <img src="/assets/images/loading_screen.gif" />
+    </div>
+
+    <script src="/import/popper.js/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+    <script src="/import/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/import/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/th.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAfi7-NAMGShglMviJTt58x-Lq0BzjDV04",
+            authDomain: "appointment-c8cfd.firebaseapp.com",
+            databaseURL: "https://appointment-c8cfd.firebaseio.com",
+            projectId: "appointment-c8cfd",
+            storageBucket: "appointment-c8cfd.appspot.com",
+            messagingSenderId: "667228538540",
+            appId: "1:667228538540:web:a20473d5c7b35eb9"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            getTimetable();
+        });
+
+        $(document).ready(function () {
+            $("#table_time tbody tr td").on("click", function (event) {
+                var user = firebase.auth().currentUser;
+                if (user) {
+                    blockUI();
+                    var rowID = $(this).attr("id");
+                    var day = rowID.substring(0, 3);
+                    var time = rowID.substring(3);
+                    var ck_time = document.getElementById(rowID).className;
+                    if (ck_time == "freetime") {
+                        switch (day) {
+                            case "mon": var day = "จันทร์"; updateNoFreeTime(day, time); break;
+                            case "tue": var day = "อังคาร"; updateNoFreeTime(day, time); break;
+                            case "wed": var day = "พุธ"; updateNoFreeTime(day, time); break;
+                            case "thu": var day = "พฤหัสบดี"; updateNoFreeTime(day, time); break;
+                            case "fri": var day = "ศุกร์"; updateNoFreeTime(day, time); break;
+                        };
+                    } else if (ck_time == "nofreetime") {
+                        switch (day) {
+                            case "mon": var day = "จันทร์"; updateFreeTime(day, time); break;
+                            case "tue": var day = "อังคาร"; updateFreeTime(day, time); break;
+                            case "wed": var day = "พุธ"; updateFreeTime(day, time); break;
+                            case "thu": var day = "พฤหัสบดี"; updateFreeTime(day, time); break;
+                            case "fri": var day = "ศุกร์"; updateFreeTime(day, time); break;
+                        };
+                    }
+                } else {
+                    console.log("No user signed in");
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

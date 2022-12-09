@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/assets/images/home.png" />
+  <link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/assets/vendor/animate/animate.css">
+  <link rel="stylesheet" type="text/css" href="/assets/vendor/animsition/css/animsition.min.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/util.css">
+  <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/import/sweetalert2/dist/sweetalert2.min.css">
+  <script type="text/javascript" src="/javascript/Index.js"></script>
+  <title>Appointment</title>
+
+  <style>
+    .credit {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100">
+        <form class="login100-form">
+          <div class="col-sm-12">
+            <div class="row justify-content-center">
+              <img src="/assets/images/RMUTT_LOGO.jpg">
+            </div>
+          </div>
+          <span class="login100-form-title  fontModern" style="font-size: 50px;">
+            Appointment
+          </span>
+          <div class="col-sm-12">
+            <div class="row justify-content-center mt-3">
+              <span class="fontModern" style="font-size: 16px">ระบบงานนัดหมาย</span>
+            </div>
+            <div class="row justify-content-center mb-5">
+              <span class="fontModern" style="font-size: 16px; text-align: center;">ภาควิชาวิศวกรรมคอมพิวเตอร์
+                มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี</span>
+            </div>
+          </div>
+          <div class="wrap-input100">
+            <input class="input100 fontModern" type="text" id="tb_username">
+            <span class="focus-input100 fontModern"></span>
+            <span class="label-input100 fontModern">ชื่อผู้ใช้</span>
+          </div>
+          <div class="wrap-input100">
+            <input class="input100 fontModern" type="password" id="tb_password">
+            <span class="focus-input100 fontModern"></span>
+            <span class="label-input100 fontModern">รหัสผ่าน</span>
+
+          </div>
+          <div class="row" style="padding-left: 8px;">
+            <p class="fontModern"
+              style="font-size: 15px; padding-left: 10px; padding-right: 10px; padding-bottom: 10px;">
+              แนะนําให้ใช้บราวเซอร์ : </p>
+            <a href="https://www.google.com/chrome/browser/" tabindex="-1" target="_blank">
+              <img src="assets/images/chrome.png" data-placement="top"
+                title="Chrome Browser - by Google เหมาะสำหรับเครื่อง Windows, Mac OSX, Linux, และ Android กดไอคอนเพื่อดาวน์โหลด"
+                style="max-height:28px; float:left; margin-right:5px;" />
+            </a>
+            <a href="https://www.mozilla.org/firefox/" tabindex="-1" target="_blank">
+              <img src="assets/images/firefox.png" data-placement="top"
+                title="Firefox Browser - by Mozilla เหมาะสำหรับเครื่อง Windows, Mac OSX, และ Linux กดไอคอนเพื่อดาวน์โหลด"
+                style="max-height:28px; float:left; margin-right:5px;" />
+            </a>
+          </div>
+          <div class="container-login100-form-btn" style="padding-top: 50px;">
+            <button class="login100-form-btn fontModern" id="btn_login" type="button">
+              เข้าสู่ระบบ
+            </button>
+          </div>
+        </form>
+        <div class="login100-more" style="background-image: url('/assets/images/bg-01.jpg');"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading_scn" style="display:none;">
+    <img src="/assets/images/loading_screen.gif" />
+  </div>
+
+  <script src="/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+  <script src="/assets/vendor/animsition/js/animsition.min.js"></script>
+  <script src="/assets/vendor/bootstrap/js/popper.js"></script>
+  <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/import/sweetalert2/dist/sweetalert2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyAfi7-NAMGShglMviJTt58x-Lq0BzjDV04",
+      authDomain: "appointment-c8cfd.firebaseapp.com",
+      databaseURL: "https://appointment-c8cfd.firebaseio.com",
+      projectId: "appointment-c8cfd",
+      storageBucket: "appointment-c8cfd.appspot.com",
+      messagingSenderId: "667228538540",
+      appId: "1:667228538540:web:a20473d5c7b35eb9"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      ManageCookie();
+    })
+
+    $('#btn_login').on('click', function () {
+      submitLogin();
+    });
+  </script>
+</body>
+
+</html>

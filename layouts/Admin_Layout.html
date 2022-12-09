@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/assets/css/navbar-fixed-left.min.css">
+    <link rel="stylesheet" href="/assets/css/navbar-fixed-right.min.css">
+    <script src="/assets/js/layout.js"></script>
+    <script src="/javascript/logout.js"></script>
+</head>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-left navbar-expand-md navbar-light bg-navbar">
+        <p class="navbar-brand"><img src="/assets/images/apppoint.png" style="padding-left: 4px;" width="210px"
+                height="65px"></p>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarText" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav list-unstyled menu-elements">
+                <li class="nav-item">
+                    <hr width="200px">
+                    <p class="text-center" id="p_datenow"></p>
+                    <hr width="200px">
+                </li>
+                <li>
+                    <a class="nav-link" id="li_home" href="Admin_Home.html"><i class="fa fa-fw fa-user-circle"></i>
+                        ผู้ใช้งานในระบบ</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_editUser" href="Admin_EditUser.html"><i class="fa fa-fw fa-user"></i>
+                        ข้อมูลอาจารย์-เจ้าหน้าที่</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_uploadTimetable" href="Admin_UploadTimetable.html"><i
+                            class="fa fa-fw fa-table"></i>
+                        อัปโหลดตารางสอน</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_uploadStudent" href="Admin_UploadStudent.html"><i
+                            class="fa fa-fw fa-upload"></i>
+                        อัปโหลดรายชื่อนักศึกษา</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_editStudent" href="Admin_EditStudent.html"><i
+                            class="fa fa-fw fa-users"></i>
+                        ข้อมูลนักศึกษา</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="" id="btn_logout"><i class="fa fa-fw fa-sign-out"></i> ออกจากระบบ</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <script>
+        (function ($, sr) {
+            var debounce = function (func, threshold, execAsap) {
+                var timeout;
+                return function debounced() {
+                    var obj = this, args = arguments;
+                    function delayed() {
+                        if (!execAsap)
+                            func.apply(obj, args);
+                        timeout = null;
+                    };
+
+                    if (timeout)
+                        clearTimeout(timeout);
+                    else if (execAsap)
+                        func.apply(obj, args);
+
+                    timeout = setTimeout(delayed, threshold || 100);
+                };
+            }
+            jQuery.fn[sr] = function (fn) { return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+
+        })(jQuery, 'smartresize');
+
+        $(window).smartresize(function () {
+            jqUpdateSize();
+        });
+
+        $(document).ready(function () {
+            var url = window.location.href;
+            var datenow = moment().format("dddd, DD/MM/YYYY");
+            $('#p_datenow').append(datenow);
+
+            if (url.includes("Home")) {
+                $('#li_home').addClass('active');
+            } else if (url.includes("UploadStudent")) {
+                $('#li_uploadStudent').addClass('active');
+            } else if (url.includes("UploadTimetable")) {
+                $('#li_uploadTimetable').addClass('active');
+            } else if (url.includes("EditUser")) {
+                $('#li_editUser').addClass('active');
+            } else if (url.includes("EditStudent")) {
+                $('#li_editStudent').addClass('active');
+            }
+        })
+        $('#btn_logout').on('click', function () {
+            submitLogout();
+        });
+    </script>
+</body>
+
+</html>

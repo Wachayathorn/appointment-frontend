@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/assets/images/imadmin.png" />
+  <link rel="stylesheet" href="/import/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/import/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/assets/css/style_project.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="/import/sweetalert2/dist/sweetalert2.min.css">
+  <link rel="stylesheet" type="text/css" href="/import/select2/dist/css/select2.min.css">
+  <link rel="stylesheet" href="/import/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+  <script src="/import/jquery/dist/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script type="text/javaScript" src="/javascript/Admin_EditUser.js"></script>
+  <script>
+    $(function () {
+      $("#layout").load("/layouts/Admin_Layout.html");
+    });
+  </script>
+  <title>Appointment</title>
+
+  <style>
+    input[type=text]:read-only {
+      background: rgb(218, 218, 218);
+    }
+
+    .changePassword {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="layout"></div>
+  <div class="content mb-3">
+    <div class="row mt-3 mb-3">
+      <div class="col-6">
+        <p class="h2" style="margin: 0;" aria-hidden="true"><i class="fa fa-fw fa-user"></i> ข้อมูลอาจารย์-เจ้าหน้าที่
+        </p>
+      </div>
+      <div class="col-6">
+        <p class="text-right" style="margin-bottom: 0px; margin-top: 8px;">ผู้ใช้งาน : Appointment Admin</p>
+      </div>
+      <hr width="100%">
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <form style="border: 2px solid #ccc; padding: 50px;">
+          <div class="form-group col-6 offset-3 text-center mb-5">
+            <label class="h5" for="sl_search_name" style="font-weight: bold;">ค้นหารายชื่ออาจารย์-เจ้าหน้าที่</label>
+            <select class="form-control js-example-basic-single" id="sl_search_name"
+              style="height: 52px !important; width: 80% !important;">
+              <option value="" selected disabled></option>
+              <optgroup label="อาจารย์" id="opt_teacher">
+              </optgroup>
+              <optgroup label="ฝ่ายธุรการ" id="opt_manage">
+              </optgroup>
+              <optgroup label="ฝ่ายบริการ" id="opt_service">
+              </optgroup>
+            </select>
+          </div>
+          <hr width="100%">
+          <div class="form-row mt-5" style="padding-left: 15px; padding-right: 15px;">
+            <div class="form-group col-2 text-right" style="padding-top: 12px;">
+              <label class="h5" for="tb_nameprefix_show" style="font-weight: bold;">คำนำหน้าชื่อ : </label>
+            </div>
+            <div class="form-group col-8">
+              <input type="text" class="form-control input-padding" id="tb_nameprefix_show" placeholder="คำนำหน้าชื่อ">
+            </div>
+          </div>
+          <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+            <div class="form-group col-2 text-right" style="padding-top: 12px;">
+              <label class="h5" for="tb_name_show" style="font-weight: bold;">ชื่อ-นามสกุล : </label>
+            </div>
+            <div class="form-group col-8">
+              <input type="text" class="form-control input-padding" id="tb_name_show" placeholder="ชื่อ-นามสกุล">
+            </div>
+          </div>
+          <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+            <div class="form-group col-2 text-right" style="padding-top: 12px;">
+              <label class="h5" for="tb_role_show" style="font-weight: bold;">สิทธิ์ในการเข้าใช้ : </label>
+            </div>
+            <div class="form-group col-8">
+              <input type="text" class="form-control input-padding" id="tb_role_show" placeholder="สิทธิ์ในการเข้าใช้"
+                readonly>
+            </div>
+          </div>
+          <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+            <div class="form-group col-2 text-right" style="padding-top: 12px;">
+              <label class="h5" for="tb_username_show" style="font-weight: bold;">ชื่อผู้ใช้ : </label>
+            </div>
+            <div class="form-group col-8">
+              <input type="text" class="form-control input-padding" id="tb_username_show" placeholder="ชื่อผู้ใช้">
+            </div>
+          </div>
+          <div class="form-row mb-3 justify-content-center">
+            <a class="h5" id="click_change_password"><i class="fa fa-fw fa-key"></i> เปลี่ยนรหัสผ่าน</a>
+          </div>
+          <div class="form-row mt-3 justify-content-center">
+            <button type="button" class="btn btn-danger" id="btn_delete" style="width: 150px"><i
+                class="fa fa-fw fa-bitbucket"></i> ลบ</button>
+            <button type="button" class="btn btn-orange" id="btn_insert" style="width: 150px"><i
+                class="fa fa-fw fa-plus"></i> เพิ่มผู้ใช้</button>
+            <button type="button" class="btn btn-success" id="btn_save" style="width: 150px"><i
+                class="fa fa-fw fa-floppy-o"></i> บันทึก</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row mt-5" style="display: none;" id="row_section">
+      <div class="col-12 text-left mb-3">
+        <p class="h2" style="margin: 0;" aria-hidden="true"><i class="fa fa-fw fa-group"></i>
+          กลุ่มนักศึกษาที่ดูแล
+        </p>
+      </div>
+      <!-- <div class="col-6 text-right mb-3">
+        <button type="button" class="btn btn-success"
+          style="width: 150px;margin: 2px; padding-left: 0px; padding-right: 0px;" id="btn_add_section">
+          <a aria-hidden="true"><i class="fa fa-fw fa-plus"></i> เพิ่มกลุ่มนักศึกษา</a></button>
+      </div> -->
+      <div class="table-responsive mb-3" style="padding-left: 15px; padding-right: 15px;">
+        <table id="table_section" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+          <thead class="bg-success">
+            <tr>
+              <th class="headTable" style="text-align: center;width: 15%;">ลำดับ</th>
+              <th class="headTable" style="text-align: center;width: 55%;">กลุ่มนักศึกษาที่ดูแล</th>
+              <th class="headTable" style="text-align: center;width: 30%;"></th>
+            </tr>
+          </thead>
+          <tbody name="table_section_tbody" style="text-align: center">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="md_insert_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-success" style="justify-content: center !important;">
+          <h5 class="modal-title" style="font-weight: bold;" id="exampleModalLabel"><i class="fa fa-fw fa-user"></i>
+            เพิ่มข้อมูลอาจารย์-เจ้าหน้าที่</h5>
+        </div>
+        <div class="modal-body">
+          <form style="border: 2px solid #ccc; padding: 50px;">
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-3 text-right" style="padding-top: 12px;">
+                <label class="h5" for="tb_nameprefix" style="font-weight: bold;">คำนำหน้าชื่อ : </label>
+              </div>
+              <div class="form-group col-9">
+                <input type="text" class="form-control input-padding" id="tb_nameprefix"
+                  placeholder="ตัวอย่าง : ศ.ดร. , อ.">
+              </div>
+            </div>
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-3 text-right" style="padding-top: 12px;">
+                <label class="h5" for="tb_name" style="font-weight: bold;">ชื่อ-นามสกุล : </label>
+              </div>
+              <div class="form-group col-9">
+                <input type="text" class="form-control input-padding" id="tb_name"
+                  placeholder="ตัวอย่าง : เก่งงาน ขยันยิ่ง">
+              </div>
+            </div>
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-3 text-right" style="padding-top: 12px;">
+                <label class="h5" for="sl_role" style="font-weight: bold;">สิทธิ์ในการใช้งาน : </label>
+              </div>
+              <div class="form-group col-9">
+                <select class="form-control input-padding" id="sl_role"
+                  style="height: 51.2px; width: 480px !important;">
+                  <option value="" selected disabled>สิทธิ์ในการใช้งาน</option>
+                  <option value="อาจารย์">อาจารย์</option>
+                  <option value="ฝ่ายธุรการ">ฝ่ายธุรการ</option>
+                  <option value="ฝ่ายบริการ">ฝ่ายบริการ</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-3 text-right" style="padding-top: 12px;">
+                <label class="h5" for="tb_username" style="font-weight: bold;">ชื่อผู้ใช้ : </label>
+              </div>
+              <div class="form-group col-9">
+                <input type="text" class="form-control input-padding" id="tb_username" placeholder="ชื่อผู้ใช้">
+              </div>
+            </div>
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-3 text-right" style="padding-top: 12px;">
+                <label class="h5" for="tb_password" style="font-weight: bold;">รหัสผ่าน : </label>
+              </div>
+              <div class="form-group col-9">
+                <input type="password" class="form-control input-padding" id="tb_password" placeholder="รหัสผ่าน">
+              </div>
+            </div>
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-3 text-right" style="padding-top: 12px;">
+                <label class="h5" for="tb_confirm_password" style="font-weight: bold;">ยืนยันรหัสผ่าน :
+                </label>
+              </div>
+              <div class="form-group col-9">
+                <input type="password" class="form-control input-padding" id="tb_confirm_password"
+                  placeholder="ยืนยันรหัสผ่าน">
+              </div>
+            </div>
+            <div class="form-row mt-3 justify-content-center" style="padding-left: 15px; padding-right: 15px;">
+              <button type="button" class="btn btn-orange" data-dismiss="modal" style="width: 150px;">ยกเลิก</button>
+              <button type="button" class="btn btn-success" style="width: 150px;" id="btn_submit_insert"><i
+                  class="fa fa-fw fa-floppy-o"></i> บันทึก</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="md_change_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-success" style="justify-content: center !important;">
+          <h5 class="modal-title h5" style="font-weight: bold;" id="exampleModalLabel"><i class="fa fa-fw fa-key"></i>
+            เปลี่ยนรหัสผ่าน</h5>
+        </div>
+        <div class="modal-body">
+          <form style="border: 2px solid #ccc; padding: 50px;">
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-3 text-right" style="padding-top: 12px;">
+                <label class="h5" for="tb_old_password" style="font-weight: bold;">รหัสผ่านเดิม :
+                </label>
+              </div>
+              <div class="form-group col-8">
+                <input type="password" class="form-control input-padding" id="tb_old_password"
+                  placeholder="รหัสผ่านเดิม">
+              </div>
+            </div>
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-3 text-right" style="padding-top: 12px;">
+                <label class="h5" for="tb_new_password" style="font-weight: bold;">รหัสผ่านใหม่ :
+                </label>
+              </div>
+              <div class="form-group col-8">
+                <input type="password" class="form-control input-padding" id="tb_new_password"
+                  placeholder="รหัสผ่านใหม่">
+                <div style="text-align: right;">
+                  <p>(อย่างน้อย 6 ตัวอักษร)</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-row justify-content-center">
+              <button type="button" class="btn btn-orange" style="width: 150px;" data-dismiss="modal">ยกเลิก</button>
+              <button type="button" class="btn btn-success" style="width: 150px;" id="btn_submit_change_password"><i
+                  class="fa fa-fw fa-floppy-o"></i>
+                บันทึก</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="modal fade" id="md_add_section" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-success" style="justify-content: center !important;">
+          <h5 class="modal-title h5" style="font-weight: bold;" id="exampleModalLabel"><i class="fa fa-fw fa-plus"></i>
+            เพิ่มกลุ่มนักศึกษาที่ดูแล</h5>
+        </div>
+        <div class="modal-body">
+          <form style="border: 2px solid #ccc; padding: 50px;">
+            <div class="form-group col-12 mb-3">
+              <label class="h5" for="ip_add_section"><b>กลุ่มนักศึกษาที่ต้องการเพิ่ม</b> &nbsp;
+                (เลือกกลุ่มนักศึกษาที่ตารางด้านล่าง)</label>
+              <input type="text" value="" data-role="tagsinput" id="ip_add_section" class="form-control"
+                style="display: none;" placeholder="รายชื่อนักศึกษา">
+            </div>
+            <div class="col-12 text-center">
+              <button type="button" class="btn btn-orange" style="width: 150px;" data-dismiss="modal">ยกเลิก</button>
+              <button type="button" id="btn_submit_section" class="btn btn-success" style="width: 150px"><i
+                  class="fa fa-fw fa-plus"></i> เพิ่ม</button>
+            </div>
+            <div class="col-12 text-left mt-5 mb-3">
+              <label class="h5" style="margin: 0; font-weight: bold;" aria-hidden="true"><i
+                  class="fa fa-fw fa-group"></i>
+                กลุ่มนักศึกษาทั้งหมด
+              </label>
+            </div>
+            <div class="table-responsive mb-3" style="padding-left: 15px; padding-right: 15px;">
+              <table id="table_add_section" class="table table-striped table-bordered dt-responsive nowrap"
+                style="width:100%">
+                <thead class="bg-success">
+                  <tr>
+                    <th class="headTable" style="text-align: center;">เลือก</th>
+                    <th class="headTable" style="text-align: center;">กลุ่มนักศึกษาทั้งหมด</th>
+                  </tr>
+                </thead>
+                <tbody name="table_add_section_tbody" style="text-align: center">
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="modal fade" id="md_edit_section" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-success" style="justify-content: center !important;">
+          <h5 class="modal-title h5" style="font-weight: bold;" id="exampleModalLabel"><i
+              class="fa fa-fw fa-pencil-square-o"></i>
+            เปลี่ยนชื่อกลุ่ม</h5>
+        </div>
+        <div class="modal-body">
+          <form style="border: 2px solid #ccc; padding: 50px;">
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-12 text-center" style="padding-top: 12px;">
+                <label class="h5" for="tb_new_section" id="text_old_section" style="font-weight: bold;"></label>
+              </div>
+            </div>
+            <div class="form-row" style="padding-left: 15px; padding-right: 15px;">
+              <div class="form-group col-3 text-right" style="padding-top: 12px;">
+                <label class="h5" for="tb_new_section" style="font-weight: bold;">ชื่อกลุ่มใหม่ :
+                </label>
+              </div>
+              <div class="form-group col-8">
+                <input type="text" class="form-control input-padding" id="tb_new_section" placeholder="ชื่อกลุ่มใหม่">
+              </div>
+            </div>
+            <div class="form-row justify-content-center">
+              <button type="button" class="btn btn-orange" style="width: 150px;" data-dismiss="modal">ยกเลิก</button>
+              <button type="button" class="btn btn-success" style="width: 150px;" id="btn_edit_section"><i
+                  class="fa fa-fw fa-floppy-o"></i>
+                บันทึก</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading_scn" style="display:none;">
+    <img src="/assets/images/loading_screen.gif" />
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="/import/popper.js/dist/umd/popper.min.js"></script>
+  <script src="/import/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/import/sweetalert2/dist/sweetalert2.min.js"></script>
+  <script src="/import/select2/dist/js/select2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/th.js"></script>
+  <script src="/import/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyAfi7-NAMGShglMviJTt58x-Lq0BzjDV04",
+      authDomain: "appointment-c8cfd.firebaseapp.com",
+      databaseURL: "https://appointment-c8cfd.firebaseio.com",
+      projectId: "appointment-c8cfd",
+      storageBucket: "appointment-c8cfd.appspot.com",
+      messagingSenderId: "667228538540",
+      appId: "1:667228538540:web:a20473d5c7b35eb9"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      RequestDropdownName();
+      $('.js-example-basic-single').select2({
+        language: {
+          noResults: function () {
+            return 'ไม่มีข้อมูล';
+          },
+        },
+      });
+    });
+
+    var table_section = $('#table_section').DataTable({
+      'columnDefs': [{
+        'targets': 2,
+        'searchable': false,
+        'orderable': false,
+      }],
+      "language": {
+        "lengthMenu": "แสดง _MENU_ กลุ่ม",
+        "zeroRecords": "ไม่มีกลุ่มนักศึกษาที่ดูแล",
+        "info": "กลุ่มนักศึกษาที่ดูแลทั้งหมด _TOTAL_ กลุ่ม",
+        "infoEmpty": "ไม่มีกลุ่มนักศึกษาที่ดูแล",
+        "search": "ค้นหา",
+        "infoFiltered": "(กรองจากทั้งหมด _MAX_ กลุ่ม)",
+        "paginate": {
+          "previous": "ย้อนกลับ",
+          "next": "ถัดไป",
+        }
+      }
+    });
+
+    var table_add_section = $('#table_add_section').DataTable({
+      'columnDefs': [{
+        'targets': 0,
+        'searchable': false,
+        'orderable': false,
+        'className': 'checkboxlist',
+      }],
+      'order': [1, 'asc'],
+      "language": {
+        "lengthMenu": "แสดง _MENU_ กลุ่ม",
+        "zeroRecords": "ไม่มีกลุ่มนักศึกษา",
+        "info": "กลุ่มนักศึกษาทั้งหมด _TOTAL_ กลุ่ม",
+        "infoEmpty": "ไม่มีกลุ่มนักศึกษา",
+        "search": "ค้นหา",
+        "infoFiltered": "(กรองจากทั้งหมด _MAX_ กลุ่ม)",
+        "paginate": {
+          "previous": "ย้อนกลับ",
+          "next": "ถัดไป",
+        }
+      }
+    });
+
+    $('#sl_search_name').on('select2:select', function (e) {
+      submitSearchTeacherName();
+    });
+
+    $('#btn_insert').on('click', function () {
+      $("#md_insert_user").modal();
+    });
+
+    $('#btn_add_section').on('click', function () {
+      $("#md_add_section").modal();
+      iptag.tagsinput('removeAll');
+      iptag.val("");
+      requestAllSection();
+    });
+
+    // $('#btn_submit_section').on('click', function () {
+    //   addMentor();
+    // });
+
+    $('#btn_edit_section').on('click', function () {
+      Swal.fire({
+        title: 'WARNING',
+        text: "ต้องการแก้ไขชื่อกลุ่มนักศึกษานี้ ?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '<i class="fa fa-check"></i> ตกลง',
+        cancelButtonText: '<i class="fa fa-times"></i> ยกเลิก',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          submitEditNameSection();
+        }
+      })
+    });
+
+    $('#btn_submit_insert').on('click', function () {
+      submitAddTeacher();
+    });
+
+    $('#btn_delete').on('click', function () {
+      Swal.fire({
+        title: 'WARNING',
+        text: "ต้องการลบชื่อผู้ใช้งานนี้ ?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '<i class="fa fa-check"></i> ตกลง',
+        cancelButtonText: '<i class="fa fa-times"></i> ยกเลิก',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          submitDeleteTeacher();
+        }
+      })
+    });
+
+    $('#btn_save').on('click', function () {
+      submitChangeUsername();
+    });
+
+    $('#click_change_password').on('click', function () {
+      $("#md_change_password").modal();
+    });
+
+    $('#btn_submit_change_password').on('click', function () {
+      submitChangePassword();
+    });
+
+    var iptag = $('#ip_add_section');
+    iptag.tagsinput({
+      itemValue: 'value',
+      itemText: 'text',
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="/assets/images/immanage.png" />
+    <link rel="stylesheet" href="/import/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/import/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style_project.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/import/sweetalert2/dist/sweetalert2.min.css">
+    <script src="/import/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascript/Manage_Dashboard.js"></script>
+    <script>
+        $(function () {
+            $("#layout").load("/layouts/Manage_Layout.html");
+        });
+    </script>
+    <title>Appointment</title>
+</head>
+
+<body>
+    <div id="layout"></div>
+    <div class="content">
+        <div class="row mt-3">
+            <div class="col-6">
+                <p class="h2" style="margin: 0;" aria-hidden="true"><i class="fa fa-fw fa-pencil-square-o"></i>
+                    การนัดหมายในวันนี้
+                </p>
+            </div>
+            <div class="col-6">
+                <p class="text-right" style="margin-bottom: 0px; margin-top: 8px;">ผู้ใช้งาน : <span
+                        id="user_login"></span></p>
+            </div>
+            <hr width="100%">
+        </div>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-12">
+                <div class="row justify-content-center">
+                    <a class="col-xl-3 col-sm-6 py-2" style="padding-top: 3px;padding-bottom: 3px;"
+                        href="Manage_List.html">
+                        <div class="card text-white bg-primary o-hidden h-100">
+                            <div class="card-body card-dashboard">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="card-body-icon">
+                                            <i class="fa fa-fw fa-paper-plane" style="width: 20px;"></i>
+                                        </div>
+                                        <div style="font-size: 20px;">การนัดหมายวันนี้ทั้งหมด</div>
+                                    </div>
+                                    <div class="number col-3 dash_value">
+                                        <div class="row justify-content-end">
+                                            <span class="counter-count" style="font-size: 50px;"
+                                                id="dash_all_app"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="col-xl-3 col-sm-6 py-2" style="padding-top: 3px;padding-bottom: 3px;"
+                        href="Manage_Accept.html">
+                        <div class="card text-white bg-success o-hidden h-100">
+                            <div class="card-body card-dashboard">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="card-body-icon">
+                                            <i class="fa fa-fw fa-check-circle" style="width: 20px;"></i>
+                                        </div>
+                                        <div style="font-size: 20px;">อนุมัติ</div>
+                                    </div>
+                                    <div class="number col-3 dash_value">
+                                        <div class="row justify-content-end">
+                                            <span class="counter-count" style="font-size: 50px;"
+                                                id="dash_accept_value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="col-xl-3 col-sm-6 py-2" style="padding-top: 3px;padding-bottom: 3px;"
+                        href="Manage_Decline.html">
+                        <div class="card text-white bg-danger o-hidden h-100">
+                            <div class="card-body card-dashboard">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="card-body-icon">
+                                            <i class="fa fa-fw fa-times-circle" style="width: 20px;"></i>
+                                        </div>
+                                        <div style="font-size: 20px;">ปฏิเสธ</div>
+                                    </div>
+                                    <div class="number col-3 dash_value">
+                                        <div class="row justify-content-end">
+                                            <span class="counter-count" style="font-size: 50px;"
+                                                id="dash_decline_value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="col-xl-3 col-sm-6 py-2" style="padding-top: 3px;padding-bottom: 3px;"
+                        href="Manage_AppointmentProcess.html">
+                        <div class="card text-white bg-warning o-hidden h-100">
+                            <div class="card-body card-dashboard">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="card-body-icon">
+                                            <i class="fa fa-fw fa-file-text" style="width: 20px;"></i>
+                                        </div>
+                                        <div style="font-size: 20px;">กำลังดำเนินเอกสาร</div>
+                                    </div>
+                                    <div class="number col-3 dash_value">
+                                        <div class="row justify-content-end">
+                                            <span class="counter-count" style="font-size: 50px;"
+                                                id="dash_proDoc_value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <label style="font-size: 20px; margin-top: 10px; margin-left: 10px;"><i
+                                class="fa fa-fw fa-paper-plane"></i> การนัดหมายวันนี้ล่าสุด (<span
+                                id="listcount"></span>)</label>
+                    </div>
+                    <div class="portlet-body border">
+                        <div class="list-group" id="dashboard_listgroup">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="/import/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/import/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="/import/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/th.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAfi7-NAMGShglMviJTt58x-Lq0BzjDV04",
+            authDomain: "appointment-c8cfd.firebaseapp.com",
+            databaseURL: "https://appointment-c8cfd.firebaseio.com",
+            projectId: "appointment-c8cfd",
+            storageBucket: "appointment-c8cfd.appspot.com",
+            messagingSenderId: "667228538540",
+            appId: "1:667228538540:web:a20473d5c7b35eb9"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script>
+        $(document).ready(function () {
+            RequestCountAppointment();
+        });
+    </script>
+</body>
+
+</html>

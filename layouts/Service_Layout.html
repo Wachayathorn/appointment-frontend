@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/assets/css/navbar-fixed-left.min.css">
+    <link rel="stylesheet" href="/assets/css/navbar-fixed-right.min.css">
+    <script src="/assets/js/layout.js"></script>
+    <script src="/javascript/logout.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-left navbar-expand-md navbar-light bg-navbar ">
+        <p class="navbar-brand"><img src="/assets/images/apppoint.png" style="padding-left: 4px;" width="210px"
+                height="65px"></p>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarText" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav list-unstyled menu-elements">
+                <li class="nav-item">
+                    <hr width="200px">
+                    <p class="text-center" id="p_datenow"></p>
+                    <hr width="200px">
+                </li>
+                <li>
+                    <a class="nav-link" id="li_dash" href="/pages/Service_Dashboard.html"><i
+                            class="fa fa-fw fa-pencil-square-o"></i>
+                        การนัดหมายในวันนี้</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_list" href="/pages/Service_List.html"><i class="fa fa-fw fa-list"></i>
+                        รายการนัดหมาย</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_accept" href="/pages/Service_Accept.html"><i
+                            class="fa fa-fw fa-check-square-o"></i>
+                        รายการที่อนุมัติ</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_decline" href="/pages/Service_Decline.html"><i
+                            class="fa fa-fw fa-calendar-times-o"></i>
+                        รายการที่ปฏิเสธ</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_borrow" href="/pages/Service_Borrow.html"><i
+                            class="fa fa-fw fa-wrench"></i>
+                        รายการที่กำลังยืมอุปกรณ์</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_history" href="/pages/Service_History.html"><i
+                            class="fa fa-fw fa-file-text-o"></i>
+                        ประวัติการนัดหมาย</a>
+                </li>
+                <li>
+                    <a class="nav-link" id="li_time" href="/pages/Service_Time.html"><i
+                            class="fa fa-fw fa-calendar"></i>
+                        จัดการเวลาว่าง</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="" id="btn_logout"><i class="fa fa-fw fa-sign-out"></i> ออกจากระบบ</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <script>
+        (function ($, sr) {
+            var debounce = function (func, threshold, execAsap) {
+                var timeout;
+                return function debounced() {
+                    var obj = this, args = arguments;
+                    function delayed() {
+                        if (!execAsap)
+                            func.apply(obj, args);
+                        timeout = null;
+                    };
+
+                    if (timeout)
+                        clearTimeout(timeout);
+                    else if (execAsap)
+                        func.apply(obj, args);
+
+                    timeout = setTimeout(delayed, threshold || 100);
+                };
+            }
+            jQuery.fn[sr] = function (fn) { return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+        })(jQuery, 'smartresize');
+
+        $(window).smartresize(function () {
+            jqUpdateSize();
+        });
+
+        $(document).ready(function () {
+            var url = window.location.href;
+            var datenow = moment().format("dddd, DD/MM/YYYY");
+            $('#p_datenow').append(datenow);
+
+            if (url.includes("Dashboard")) {
+                $('#li_dash').addClass('active');
+            } else if (url.includes("List")) {
+                $('#li_list').addClass('active');
+            } else if (url.includes("Accept")) {
+                $('#li_accept').addClass('active');
+            } else if (url.includes("Decline")) {
+                $('#li_decline').addClass('active');
+            } else if (url.includes("Borrow")) {
+                $('#li_borrow').addClass('active');
+            } else if (url.includes("History")) {
+                $('#li_history').addClass('active');
+            } else if (url.includes("Time")) {
+                $('#li_time').addClass('active');
+            }
+        })
+        $('#btn_logout').on('click', function () {
+            submitLogout();
+        });
+    </script>
+</body>
+
+</html>
